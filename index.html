@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Human Rights Midterm Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lora:wght@500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      --bg: #faf9f5;
+      --card: #ffffff;
+      --ink: #141413;
+      --muted: #6b6a64;
+      --line: #e8e6dc;
+      --accent: #d97757;
+      --accent-d: #c6613f;
+      --accent-bg: #fbeee8;
+      --ok: #4a7c59;
+      --ok-bg: #e9f3ec;
+      --bad: #b04a3a;
+      --bad-bg: #fbeae6;
+      --soft: #f0eee6
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Cairo", system-ui, -apple-system, "Segoe UI", sans-serif;
+      line-height: 1.7
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 16px 80px
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 22px
+    }
+
+    h1 {
+      font-family: "Lora", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      margin: 0 0 4px;
+      letter-spacing: -.01em
+    }
+
+    h1 span {
+      color: var(--accent)
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 0;
+      font-size: .98rem
+    }
+
+    .bar {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 5;
+      background: var(--bg);
+      padding: 10px 0 12px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center
+    }
+
+    .tab,
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      font-size: .92rem;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      padding: 7px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: .15s
+    }
+
+    .tab:hover,
+    .btn:hover {
+      border-color: var(--accent)
+    }
+
+    .tab.on {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff
+    }
+
+    .stats {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: .9rem;
+      color: var(--muted)
+    }
+
+    .stats b {
+      color: var(--ink)
+    }
+
+    .prog {
+      flex: 1 1 160px;
+      max-width: 300px;
+      height: 8px;
+      background: var(--soft);
+      border-radius: 99px;
+      overflow: hidden
+    }
+
+    .prog i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+      transition: width .3s
+    }
+
+    .btn.sm {
+      padding: 4px 12px;
+      font-size: .82rem
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 18px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 2px rgba(20, 20, 19, .04)
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px
+    }
+
+    .badge {
+      font-size: .78rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--accent-bg);
+      color: var(--accent-d)
+    }
+
+    .badge.tf {
+      background: var(--soft);
+      color: var(--muted)
+    }
+
+    .q {
+      direction: ltr;
+      text-align: left;
+      font-family: "Lora", Georgia, serif;
+      font-size: 1.08rem;
+      font-weight: 500;
+      line-height: 1.55;
+      margin: 0 0 12px
+    }
+
+    .opts {
+      display: grid;
+      gap: 8px;
+      direction: ltr
+    }
+
+    .opt {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      text-align: left;
+      font: inherit;
+      font-size: .98rem;
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: .15s
+    }
+
+    .opt:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: var(--accent-bg)
+    }
+
+    .opt .l {
+      flex: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--soft);
+      display: grid;
+      place-items: center;
+      font-size: .8rem;
+      font-weight: 700
+    }
+
+    .opt:disabled {
+      cursor: default
+    }
+
+    .opt.ok {
+      background: var(--ok-bg);
+      border-color: var(--ok)
+    }
+
+    .opt.ok .l {
+      background: var(--ok);
+      color: #fff
+    }
+
+    .opt.bad {
+      background: var(--bad-bg);
+      border-color: var(--bad)
+    }
+
+    .opt.bad .l {
+      background: var(--bad);
+      color: #fff
+    }
+
+    .tfrow {
+      grid-template-columns: 1fr 1fr
+    }
+
+    .tfrow .opt {
+      justify-content: center;
+      font-weight: 600
+    }
+
+    .actions {
+      margin-top: 10px
+    }
+
+    .exp {
+      display: none;
+      margin-top: 14px;
+      border-top: 1px dashed var(--line);
+      padding-top: 12px
+    }
+
+    .card.done .exp {
+      display: block
+    }
+
+    .row {
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      font-size: .96rem
+    }
+
+    .row strong {
+      display: block;
+      font-size: .84rem;
+      margin-bottom: 1px
+    }
+
+    .r1 {
+      background: var(--soft)
+    }
+
+    .r2 {
+      background: var(--ok-bg);
+      color: #2f5a3d
+    }
+
+    .r2 .en {
+      direction: ltr;
+      text-align: left;
+      display: block;
+      font-family: "Lora", Georgia, serif;
+      font-weight: 600
+    }
+
+    .r3 {
+      background: var(--accent-bg)
+    }
+
+    .verdict {
+      font-weight: 700;
+      margin-bottom: 8px
+    }
+
+    .verdict.ok {
+      color: var(--ok)
+    }
+
+    .verdict.bad {
+      color: var(--bad)
+    }
+
+    .verdict.skip {
+      color: var(--muted)
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px 0
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Human Rights <span>Midterm Review</span></h1>
+      <p class="sub">مراجعة الامتحان: اختيار من متعدد وصح وخطأ، مع شرح بالعربي</p>
+    </header>
+    <div class="bar">
+      <div class="tabs" id="tabs"></div>
+      <div class="stats">
+        <span>اتحل <b id="sDone">0</b> / <b id="sTot">0</b></span>
+        <span>صح <b id="sOk">0</b></span>
+        <div class="prog"><i id="pBar"></i></div>
+        <button class="btn sm" id="reset">ابدأ من جديد</button>
+      </div>
+    </div>
+    <div id="list"></div>
+  </div>
+  <script>
+    var DATA = [{"t": "mcq", "n": 1, "q": "Culture is not universally shared; and ............", "o": ["this leads to similar ethical standards.", "this leads to conflicting ethical standards.", "this leads to no ethical standards.", "this leads to unethical behavior."], "c": 1, "a": "بيسأل إيه نتيجة إن الثقافة مش مشتركة بين كل الشعوب؟", "w": "الثقافات بتختلف من مجتمع للتاني، فبتطلع معايير أخلاقية متعارضة."}, {"t": "mcq", "n": 2, "q": "The scholar who noted that girls ethics are more concerned with relationships and connections with other people while boys ethics are more interested in justice.", "o": ["Gilligan", "Kohlberg", "Piaget", "Freud"], "c": 0, "a": "بيسأل مين اللي قال إن أخلاق البنات بتركز على العلاقات وأخلاق الأولاد على العدالة؟", "w": "Gilligan هي اللي قالت كده، وكانت بتنتقد Kohlberg اللي ركّز على العدالة."}, {"t": "mcq", "n": 3, "q": "Cultural values are formalized into law ............", "o": ["when compliance is especially important to society.", "when compliance is especially unimportant to society.", "when compliance is especially important to individuals.", "when compliance is especially unimportant to individuals."], "c": 0, "a": "بيسأل إمتى القيم الثقافية بتتحول لقانون؟", "w": "لما الالتزام بالقيمة دي يبقى مهم جدًا للمجتمع ككل."}, {"t": "mcq", "n": 4, "q": "This scientist believed that women’s moral sense was underdeveloped.", "o": ["Gilligan", "Aristotle", "Piaget", "Freud"], "c": 3, "a": "بيسأل مين العالم اللي شاف إن الحس الأخلاقي عند المرأة ناقص؟", "w": "Freud كان شايف كده، وGilligan ردّت عليه."}, {"t": "mcq", "n": 5, "q": "Does my company favour any gender? This belongs to the study of ........", "o": ["Micro ethics", "Macro ethics", "Meta ethics", "Super ethics"], "c": 1, "a": "بيسأل السؤال ده تبع أي فرع (هل الشركة بتفضّل جنس معين؟).", "w": "ده سؤال عن سياسة الشركة كلها وأثرها على المجتمع، فهو Macro ethics."}, {"t": "mcq", "n": 6, "q": "Don’t lose confidential files? This belongs to the study of ........", "o": ["Micro ethics", "Macro ethics", "Meta ethics", "Super ethics"], "c": 0, "a": "بيسأل السؤال ده تبع أي فرع (متضيّعش ملفات سرية).", "w": "ده سلوك فردي يومي داخل الشغل، فهو Micro ethics."}, {"t": "mcq", "n": 7, "q": "This ethical theory assumes that individuals have an obligation to guide their conduct by a rational calculation of their own interests.", "o": ["Egoism or self-interest ethics", "Cultural relativism", "Morality", "Social-relativism"], "c": 0, "a": "بيسأل أنهي نظرية بتقول الفرد لازم يتصرف حسب مصلحته الشخصية بحسابات عقلانية.", "w": "دي Egoism: المصلحة الذاتية هي معيار الأخلاق."}, {"t": "mcq", "n": 8, "q": "The concept of democracy is a good example of applying which of the following ethical theories?", "o": ["Virtue ethics", "Utilitarianism", "Lock’s ethical theory", "Kant’s ethical theory of Formalism"], "c": 1, "a": "بيسأل الديمقراطية مثال لأنهي نظرية.", "w": "الديمقراطية حكم الأغلبية وتحقيق أكبر نفع لأكبر عدد، وده جوهر Utilitarianism."}, {"t": "mcq", "n": 9, "q": "This ethical theory believed that everyone has rights that arise from existing such as right to life, maximum individual liberty, and human dignity.", "o": ["Virtue ethics", "Utilitarianism", "Lock’s ethical theory", "Kant’s ethical theory of Formalism"], "c": 2, "a": "بيسأل أنهي نظرية بتقول لكل إنسان حقوق بالفطرة (حياة، حرية، كرامة).", "w": "Locke هو صاحب نظرية الحقوق الطبيعية."}, {"t": "mcq", "n": 10, "q": "This branch of ethics is concerned with the practical means of determining a moral course of action.", "o": ["Meta-ethics", "Normative ethics", "Micro-ethics", "Applied ethics"], "c": 1, "a": "بيسأل أنهي فرع بيحدد الطريقة العملية لاختيار التصرف الأخلاقي.", "w": "Normative ethics بتقول إيه الصح اللي نعمله وبتحط القواعد."}, {"t": "mcq", "n": 11, "q": "This type of study concerned with what moral values people actually follow regardless of whether they are considered “good” or “bad”.", "o": ["Moral Psychology", "Micro-ethics", "Descriptive ethics", "Applied ethics"], "c": 2, "a": "بيسأل أنهي دراسة بتهتم بالقيم اللي الناس فعلًا بتمشي عليها سواء كويسة أو وحشة.", "w": "Descriptive ethics بتوصف الواقع زي ما هو من غير حكم."}, {"t": "mcq", "n": 12, "q": "“The golden mean rule.” This type of rule is an example of rules found in ..........", "o": ["Meta-ethics", "Normative ethics", "Code of ethics", "Applied ethics"], "c": 1, "a": "بيسأل قاعدة \"الوسط الذهبي\" بتتحط تحت أنهي فرع.", "w": "هي قاعدة بتوجّه السلوك، يعني Normative ethics."}, {"t": "mcq", "n": 13, "q": "The ethical theory based on producing the maximum benefit for the greatest number of people.", "o": ["Virtue ethics", "Utilitarianism", "Lock’s ethical theory", "Kant’s ethical theory of Formalism"], "c": 1, "a": "بيسأل أنهي نظرية هدفها أكبر منفعة لأكبر عدد.", "w": "ده تعريف Utilitarianism."}, {"t": "mcq", "n": 14, "q": "Does my company buy from countries that respect human rights? This belongs to the study of ........", "o": ["Micro ethics", "Macro ethics", "Meta ethics", "Super ethics"], "c": 1, "a": "بيسأل السؤال ده تبع أي فرع (الشركة بتشتري من دول بتحترم حقوق الإنسان؟).", "w": "قرار على مستوى الشركة والمجتمع، فهو Macro ethics."}, {"t": "mcq", "n": 15, "q": "Don’t throw company files away? This belongs to the study of ........", "o": ["Micro ethics", "Macro ethics", "Meta ethics", "Super ethics"], "c": 0, "a": "بيسأل السؤال ده تبع أي فرع (مترميش ملفات الشركة).", "w": "سلوك فردي بسيط، فهو Micro ethics."}, {"t": "mcq", "n": 16, "q": "This branch is concerned with how moral outcomes can be achieved in specific situations in specific fields, for example (business, medical, engineering, ...).", "o": ["Normative ethics", "Applied ethics", "Meta-ethics", "Micro-ethics"], "c": 1, "a": "بيسأل أنهي فرع بيطبّق الأخلاق في مجالات محددة (بيزنس، طب، هندسة).", "w": "Applied ethics هي التطبيق في مواقف ومجالات معينة."}, {"t": "mcq", "n": 17, "q": "This ethical theory believed that duty is fundamental and happiness is a result of good will and performing your duty.", "o": ["Virtue ethics", "Utilitarianism", "Lock’s ethical theory", "Kant’s ethical theory of Formalism"], "c": 3, "a": "بيسأل أنهي نظرية بتقول الواجب هو الأساس والسعادة نتيجة النية الحسنة.", "w": "Kant's Formalism بتركز على الواجب والإرادة الطيبة."}, {"t": "mcq", "n": 18, "q": "This branch of ethics is concerned with the theoretical meaning and reference of moral systems and different theories about the original source of ethics.", "o": ["Meta-ethics", "Normative ethics", "Micro-ethics", "Applied ethics"], "c": 0, "a": "بيسأل أنهي فرع بيدرس المعنى النظري للأخلاق ومصدرها الأصلي.", "w": "Meta-ethics بتسأل: الأخلاق جاية منين ومعناها إيه؟"}, {"t": "mcq", "n": 19, "q": "This type of study is concerned with how moral capacity develops in humans and what is its nature.", "o": ["Moral Psychology", "Micro-ethics", "Descriptive ethics", "Applied ethics"], "c": 0, "a": "بيسأل أنهي دراسة بتبحث في نمو القدرة الأخلاقية عند الإنسان.", "w": "Moral Psychology بتدرس تطور الحس الأخلاقي وطبيعته."}, {"t": "mcq", "n": 20, "q": "“How a clerk should handle a ’conflict of interest’ situation?” This type of question is addressed in ........", "o": ["Meta-ethics", "Normative ethics", "Virtue ethics", "Applied ethics"], "c": 3, "a": "بيسأل سؤال \"موظف يتصرف إزاي في تضارب مصالح\" بيتحل في أنهي فرع.", "w": "ده موقف عملي في مجال معين، فهو Applied ethics."}, {"t": "mcq", "n": 21, "q": "Gilligan concluded that these women were thinking more about the caring thing to do rather than the thing:", "o": ["the religion allowed", "the culture allowed", "the rules allowed", "the government allowed"], "c": 2, "a": "بيسأل Gilligan استنتجت إن النساء بيفكروا في الرعاية بدل إيه.", "w": "بدل \"القواعد اللي سمحت بيها\" (the rules allowed)، لأنها شافت إن تفكيرهم قايم على الرعاية."}, {"t": "mcq", "n": 22, "q": "How a teacher should handle a ’conflict of interest’ situation? This type of question is addressed in:", "o": ["Meta-ethics", "Applied ethics", "Normative ethics", "Virtue ethics"], "c": 1, "a": "بيسأل سؤال \"المدرس يتصرف إزاي في تضارب مصالح\" تبع أي فرع.", "w": "موقف عملي في مهنة محددة، يعني Applied ethics."}, {"t": "mcq", "n": 23, "q": "What is the name of human rights’ standards monitoring committees?", "o": ["Special procedures", "Treaty bodies", "International human rights instruments", "United Nations Commission on Human Rights"], "c": 1, "a": "بيسأل اسم لجان مراقبة معايير حقوق الإنسان.", "w": "Treaty bodies هي لجان خبراء مستقلين بتراقب تطبيق المعاهدات."}, {"t": "mcq", "n": 24, "q": "Derived from the Greek word ethos:", "o": ["ethics is “our interests.”", "ethics is “our inclinations.”", "ethics is “our ideas.”", "ethics is “our character.”"], "c": 3, "a": "بيسأل كلمة ethics مشتقة من ethos معناها إيه.", "w": "ethos يعني \"الشخصية/الطبع\" (our character)."}, {"t": "mcq", "n": 25, "q": "The Preamble’s paragraphs:", "o": ["give the historical background of the UDHR.", "explain the political dimensions of adopting human rights.", "set out the reason for adopting the Declaration.", "discuss the violations of human rights."], "c": 2, "a": "بيسأل فقرات الديباجة (Preamble) بتعمل إيه.", "w": "بتوضح سبب إصدار الإعلان."}, {"t": "mcq", "n": 26, "q": "The primary duty bearers responsible for protecting human rights are:", "o": ["Individuals", "Governments", "NGOs", "All of the above"], "c": 1, "a": "بيسأل مين المسؤول الأساسي عن حماية حقوق الإنسان.", "w": "الحكومات (الدول) هي الطرف الأساسي الملتزم (duty-bearer)."}, {"t": "mcq", "n": 27, "q": "Human rights cannot be positioned in a hierarchical order because:", "o": ["they relate to political issues only.", "they apply to all equally.", "they follow international treaties.", "they are connected to civil rights."], "c": 1, "a": "بيسأل ليه حقوق الإنسان مش ممكن ترتّب بالأهمية.", "w": "لأنها بتنطبق على الجميع بالتساوي ومفيش حق أهم من حق."}, {"t": "mcq", "n": 28, "q": "Gilligan noted that girls are more concerned with __________ with other people than boys.", "o": ["care", "relationships", "care, relationships, and connections", "connections"], "c": 2, "a": "بيسأل Gilligan بتقول البنات أكتر اهتمامًا بإيه.", "w": "بالرعاية والعلاقات والروابط مع الناس، الثلاثة مع بعض."}, {"t": "mcq", "n": 29, "q": "Independent expert committees are set up by the United Nations as tools used to monitor that all duty-bearers fulfill their commitments according to the UDHR and also to help to explain particular human rights. These committees are called:", "o": ["special procedures", "treaty bodies", "legal guarantees", "media channels"], "c": 1, "a": "بيسأل اسم لجان الخبراء المستقلين اللي الأمم المتحدة عاملاها للمراقبة.", "w": "Treaty bodies."}, {"t": "mcq", "n": 30, "q": "Human rights belong to and are to be enjoyed by all human beings apart from their race, color, gender, language, religion, political views, social origin, or other status. This means that human rights are:", "o": ["Inalienable", "Universal", "Interrelated", "Interdependent"], "c": 1, "a": "بيسأل أنهي خاصية بتقول الحقوق لكل البشر مهما كان عرقهم أو دينهم.", "w": "Universal يعني عالمية، لكل إنسان."}, {"t": "mcq", "n": 31, "q": "The picture of human nature Kohlberg begins with is that humans are inherently communicative and capable of reason.", "o": ["They also possess a desire to understand each other only.", "They also possess a desire to understand the world around them only.", "They also possess a desire to understand other and the world around them.", "None of the above."], "c": 2, "a": "بيسأل Kohlberg بيبدأ من أنهي صورة للطبيعة البشرية.", "w": "الإنسان عاقل ومتواصل ويرغب يفهم الآخرين والعالم حواليه."}, {"t": "mcq", "n": 32, "q": "ILO protects:", "o": ["women.", "racial minorities.", "workers.", "oppressed groups."], "c": 2, "a": "بيسأل منظمة ILO بتحمي مين.", "w": "ILO هي منظمة العمل الدولية، فبتحمي العمال."}, {"t": "mcq", "n": 33, "q": "Human rights cannot be taken away from any human being. This means that human rights are:", "o": ["Universal", "Inalienable", "Interrelated", "Interdependent"], "c": 1, "a": "بيسأل أنهي خاصية بتقول الحقوق متتسحبش من أي إنسان.", "w": "Inalienable يعني غير قابلة للتنازل أو السحب."}, {"t": "mcq", "n": 34, "q": "The Preamble of the UDHR consists of __________ and the final proclamation of the Declaration.", "o": ["five paragraphs.", "six paragraphs.", "seven paragraphs.", "eight paragraphs."], "c": 2, "a": "بيسأل ديباجة الإعلان العالمي فيها كام فقرة.", "w": "سبع فقرات وبعدها إعلان الإعلان نفسه."}, {"t": "mcq", "n": 35, "q": "There are three levels of obligation of governments towards human rights. The first level is simply not to interfere with their enjoyment, which means that the governments should:", "o": ["Protect human rights", "Respect human rights", "Fulfill human rights", "Disrespect human rights"], "c": 1, "a": "بيسأل أول مستوى من التزامات الحكومات (متتدخلش في التمتع بالحق).", "w": "ده Respect: احترام الحق بعدم التدخل فيه."}, {"t": "mcq", "n": 36, "q": "Human rights are given to all people regardless of:", "o": ["age and gender.", "race and ethnicity.", "religion and political views.", "all of the above."], "c": 3, "a": "بيسأل الحقوق بتتعطى للناس بغض النظر عن إيه.", "w": "كل اللي ذُكر: السن والجنس والعرق والدين والرأي السياسي."}, {"t": "mcq", "n": 37, "q": "There are three levels of obligation of governments towards human rights. The second level is to take steps to ensure third parties do not interfere with their enjoyment, which means that the governments should:", "o": ["Disrespect human rights", "Respect human rights", "Protect human rights", "Fulfill human rights"], "c": 2, "a": "بيسأل المستوى التاني (تمنع أطراف تالتة من التدخل).", "w": "ده Protect: حماية الحق من انتهاك الغير."}, {"t": "mcq", "n": 38, "q": "One of the following is not among the human rights’ characteristics:", "o": ["they are not legally protected because they follow the laws of each country individually.", "they cannot be waived or taken away.", "they impose obligations of action and omission, particularly on States.", "they focus on the dignity and equal worth of all human beings."], "c": 0, "a": "بيسأل أنهي جملة مش من خصائص حقوق الإنسان.", "w": "حقوق الإنسان محمية قانونيًا دوليًا، فجملة \"مش محمية لأنها تابعة لقوانين كل دولة\" غلط."}, {"t": "mcq", "n": 39, "q": "There are three levels of obligation of governments towards human rights. The third level is to take steps progressively to realize the rights that are still not satisfied for any groups, which means that the governments should:", "o": ["Protect human rights", "Respect human rights", "Disrespect human rights", "Fulfill human rights"], "c": 3, "a": "بيسأل المستوى التالت (خطوات تدريجية لتحقيق الحقوق).", "w": "ده Fulfill: الوفاء بالحق وتحقيقه تدريجيًا."}, {"t": "mcq", "n": 40, "q": "The UDHR grants everyone the right to a nationality but:", "o": ["that person has the right to change his nationality.", "that person doesn’t have the right to change this nationality.", "that person can be arbitrarily deprived of his nationality.", "that person can be arbitrarily forced to change his nationality."], "c": 0, "a": "بيسأل الإعلان العالمي بيدي الجنسية لكن إيه كمان.", "w": "من حق الشخص يغيّر جنسيته، ومينفعش تُسحب منه تعسفًا."}, {"t": "mcq", "n": 41, "q": "The concept of “golden mean” is a good example of applying which of the following ethical theories?", "o": ["Utilitarianism", "Virtue ethics", "Lock’s ethical theory", "Kant’s ethical theory of Formalism"], "c": 1, "a": "بيسأل \"الوسط الذهبي\" مثال لأنهي نظرية.", "w": "Virtue ethics (أرسطو): الفضيلة وسط بين طرفين."}, {"t": "mcq", "n": 42, "q": "UDHR was the outcome of:", "o": ["the rise of the United Nations.", "the International Bill of Human Rights.", "the horrors of World War II.", "the International Covenant on Economic, Social and Cultural Rights."], "c": 2, "a": "بيسأل الإعلان العالمي كان نتيجة إيه.", "w": "نتيجة أهوال الحرب العالمية التانية."}, {"t": "mcq", "n": 43, "q": "UDHR consists of:", "o": ["50 articles.", "375 articles.", "30 articles.", "1948 articles."], "c": 2, "a": "بيسأل الإعلان العالمي فيه كام مادة.", "w": "30 مادة."}, {"t": "mcq", "n": 44, "q": "Which is more important: States’ obligations or individual rights?", "o": ["Individual obligations are more important.", "They are of equal importance.", "State obligations are more important.", "Individuals and other groups of society together are more important."], "c": 2, "a": "بيسأل أيهما أهم: التزامات الدولة ولا حقوق الأفراد (حسب الملف).", "w": "الإجابة في الملف: التزامات الدولة أهم، لأن الدولة هي الملتزمة الأساسية بتنفيذ الحقوق."}, {"t": "mcq", "n": 45, "q": "“Do unto others as you would have them do unto you” was a social code that emerged from the sense of belonging to:", "o": ["a group, whether a family, a tribe, a class, a race, or an ethnicity.", "a group, whether a religion, a community, or a state.", "a group, whether a family, a tribe, a class, a race, an ethnicity, a religion, a community, or a state.", "a group, whether a political party or an economic category."], "c": 2, "a": "بيسأل \"عامل الناس زي ما تحب يعاملوك\" طلعت من الانتماء لإيه.", "w": "من الانتماء لأي جماعة: عيلة، قبيلة، طبقة، عرق، دين، مجتمع، دولة."}, {"t": "mcq", "n": 46, "q": "The Preamble of the UDHR appears:", "o": ["after the UDHR.", "before the UDHR.", "in the middle of the UDHR.", "None of the above."], "c": 1, "a": "بيسأل الديباجة بتظهر فين.", "w": "قبل مواد الإعلان (مقدمة)."}, {"t": "mcq", "n": 47, "q": "The most important revolutions that were the outcome of lacking human rights and sought to establish more justice to the oppressed groups took place in the eighteenth century in:", "o": ["the USA and in England.", "England and Germany.", "the USA and in France.", "Germany and Switzerland."], "c": 2, "a": "بيسأل الثورات المهمة بسبب غياب الحقوق في القرن 18 كانت فين.", "w": "أمريكا وفرنسا."}, {"t": "mcq", "n": 48, "q": "Rights Guaranteed Under International Treaties do not include:", "o": ["The right to a fair trial.", "The right to a nationality.", "The right to counter attack police forces.", "The right to the highest attainable standard of health."], "c": 2, "a": "بيسأل أنهي حق مش ضمن الحقوق في المعاهدات الدولية.", "w": "\"الحق في مهاجمة الشرطة\" مش حق، والباقي حقوق معترف بيها."}, {"t": "mcq", "n": 49, "q": "Individuals have general responsibilities towards the community at large and, at a minimum:", "o": ["must respect the human rights of the State.", "must respect the human rights of other countries.", "must respect the human rights of others.", "must respect the human rights of themselves."], "c": 2, "a": "بيسأل الأفراد عليهم مسؤولية إيه تجاه المجتمع.", "w": "لازم يحترموا حقوق الآخرين على الأقل."}, {"t": "mcq", "n": 50, "q": "The United Nations had to be established because:", "o": ["The horrors of the two wars made people feel unsecure.", "The USA won the war.", "Franklin Roosevelt wanted to punish the defeated countries in the war.", "The League of Nations failed to achieve its goals."], "c": 0, "a": "بيسأل ليه لازم تتأسس الأمم المتحدة.", "w": "لأن أهوال الحربين خلّت الناس تحس بعدم الأمان."}, {"t": "mcq", "n": 51, "q": "The mid-nineteenth century witnessed the end of slavery in:", "o": ["England only.", "USA only.", "England and the northern states of the USA only.", "England and the southern states of the USA only."], "c": 2, "a": "بيسأل العبودية انتهت فين في منتصف القرن 19.", "w": "في إنجلترا وولايات أمريكا الشمالية بس."}, {"t": "mcq", "n": 52, "q": "The foundation of justice, freedom, and peace in the world is in:", "o": ["The proclamation of UDHR.", "The disregard of the barbarous acts of WWII.", "The economic prosperity of all human beings.", "None of the above."], "c": 3, "a": "بيسأل أساس العدالة والحرية والسلام في العالم إيه.", "w": "حسب الديباجة هو الاعتراف بالكرامة المتأصلة والحقوق المتساوية، فمفيش اختيار منهم صح لذلك الإجابة None of the above."}, {"t": "mcq", "n": 53, "q": "Everyone is entitled to all rights and freedoms in the UNDR regardless of:", "o": ["Race and color.", "Language, religion, political opinion.", "National or social origin, property and birth.", "All of the above."], "c": 3, "a": "بيسأل كل الحريات في الإعلان لكل إنسان بغض النظر عن إيه.", "w": "كل الأسباب: العرق واللون واللغة والدين والرأي والأصل والملكية والميلاد."}, {"t": "mcq", "n": 54, "q": "Slavery and slave trade are prohibited under UDHR:", "o": ["According to the laws of each state.", "In all their forms and at all times.", "During peace times, but allowed at times of war.", "According to the race of the people taken as slaves."], "c": 1, "a": "بيسأل الإعلان بيمنع العبودية إزاي.", "w": "في كل أشكالها وفي كل الأوقات (سلم وحرب)."}, {"t": "mcq", "n": 55, "q": "The UDHR guarantees freedom of movement so that:", "o": ["Everyone can move within the borders of each state and leave any country, return to it.", "Everyone can leave but not return to his country.", "Everyone can move freely within the borders of neighboring states only.", "Everyone has the right to move into any country but not to reside in it."], "c": 0, "a": "بيسأل حرية التنقل في الإعلان معناها إيه.", "w": "أي حد يتحرك داخل حدود دولته ويسيب أي بلد ويرجع لبلده."}, {"t": "mcq", "n": 56, "q": "Which of the following is NOT among UDHR articles?", "o": ["Everyone has the right to freedom of race or ethnicity.", "Everyone has the right to freedom of opinion and expression.", "Everyone has the right to rest and leisure, including reasonable limitation of working hours.", "Everyone has the right to education."], "c": 0, "a": "بيسأل أنهي جملة مش من مواد الإعلان.", "w": "مفيش مادة اسمها \"حرية العرق\"؛ الباقي (الرأي والتعبير، الراحة، التعليم) مواد موجودة."}, {"t": "mcq", "n": 57, "q": "Greeks and Romans believed that human rights were:", "o": ["rights that reflected the laws of nature and the universe.", "rights given to people who owned property and shared in political decisions only.", "rights given to all people equally by their gods.", "rights given only to the educated class and political groups."], "c": 0, "a": "بيسأل اليونانيين والرومان كانوا شايفين الحقوق إزاي.", "w": "حقوق بتعكس قوانين الطبيعة والكون."}, {"t": "mcq", "n": 58, "q": "The early documents on human rights excluded:", "o": ["all of the above.", "people of certain race and ethnicity.", "women.", "certain social, economic and political groups."], "c": 0, "a": "بيسأل الوثائق المبكرة استبعدت مين.", "w": "كل اللي ذُكر: أعراق، نساء، وفئات اجتماعية واقتصادية وسياسية."}, {"t": "mcq", "n": 59, "q": "The League of Nations failed to achieve its goals because:", "o": ["of the outbreak of WWII.", "the USA did not join it.", "its budget was not enough to cover the expenses.", "the European allies could not agree on one agenda."], "c": 1, "a": "بيسأل ليه فشلت عصبة الأمم.", "w": "لأن أمريكا مدخلتش فيها."}, {"t": "mcq", "n": 60, "q": "Rights guaranteed in the human rights international treaties include:", "o": ["the right to change one’s nationality.", "the right to get a job in the government organs.", "the right to adequate food, housing and social security.", "freedom of choosing one’s name."], "c": 2, "a": "بيسأل أنهي حق مضمون في معاهدات حقوق الإنسان.", "w": "الحق في الغذاء والسكن والضمان الاجتماعي الكافي."}, {"t": "mcq", "n": 61, "q": "To fulfil human rights means:", "o": ["not to take steps progressively to realize the right in question.", "to take steps rarely to realize the right in question.", "to take steps progressively to realize the right in question.", "to take steps progressively to realize any of the human right."], "c": 2, "a": "بيسأل معنى \"Fulfill\" الحقوق.", "w": "خطوات تدريجية لتحقيق الحق المعني."}, {"t": "mcq", "n": 62, "q": "To respect human rights means:", "o": ["simply not to interfere with their enjoyment.", "simply to interfere with their enjoyment.", "simply to always interfere with their enjoyment.", "simply to sometimes interfere with their enjoyment."], "c": 0, "a": "بيسأل معنى \"Respect\" الحقوق.", "w": "ببساطة عدم التدخل في التمتع بيها."}, {"t": "mcq", "n": 63, "q": "National legislation and policies must detail how the State’s human rights obligations will be given:", "o": ["at provincial levels.", "at national, provincial and local levels.", "at local levels.", "at national levels."], "c": 1, "a": "بيسأل التشريعات والسياسات الوطنية لازم تطبّق الالتزامات على أنهي مستويات.", "w": "الوطني والإقليمي (المحافظات) والمحلي."}, {"t": "mcq", "n": 64, "q": "Sometimes the equal worth and dignity of all can be assured only through:", "o": ["the recognition and protection of individuals’ rights as members of a group.", "the recognition and protection of individuals’ rights as members of a religion.", "the recognition and protection of individuals’ rights as members of a race.", "the recognition and protection of individuals’ rights as members of a state."], "c": 0, "a": "بيسأل أحيانًا المساواة في الكرامة بتتحقق بإيه.", "w": "بالاعتراف بحقوق الفرد كعضو في جماعة (group)."}, {"t": "mcq", "n": 65, "q": "The UDHR consists mainly of an introductory preamble and ........ articles.", "o": ["31", "30", "none", "7"], "c": 1, "a": "بيسأل الإعلان فيه ديباجة وكام مادة.", "w": "30 مادة."}, {"t": "mcq", "n": 66, "q": "Human Rights is .......... .", "o": ["alienable", "all of the above", "divisible", "Universal"], "c": 3, "a": "بيسأل حقوق الإنسان إيه.", "w": "Universal: عالمية لكل البشر."}, {"t": "mcq", "n": 67, "q": "The Declaration has been translated into at least ............ languages and dialects, making it the most widely translated document in the world.", "o": ["100", "375", "200", "350"], "c": 1, "a": "بيسأل الإعلان اتترجم لكام لغة.", "w": "375 لغة ولهجة على الأقل، وده أكتر وثيقة مترجمة في العالم."}, {"t": "mcq", "n": 68, "q": "The Universal Declaration of Human Rights (UDHR), which was adopted by ............ in 1948.", "o": ["Arabs", "United Nations", "United States", "none"], "c": 1, "a": "بيسأل مين اللي اعتمد الإعلان العالمي سنة 1948.", "w": "الأمم المتحدة."}, {"t": "mcq", "n": 69, "q": "............ protect the individual.", "o": ["individuals rights", "a and b", "collective rights", "none"], "c": 0, "a": "بيسأل مين اللي بيحمي الفرد.", "w": "الحقوق الفردية (Individual rights) بتحمي الفرد."}, {"t": "mcq", "n": 70, "q": "The Declaration was the outcome of the experience of ............ and it represents the first global expression of rights to which all human beings are entitled.", "o": ["Civil War", "World War I", "World War II", "none"], "c": 2, "a": "بيسأل الإعلان نتيجة تجربة أنهي حرب.", "w": "الحرب العالمية التانية، وهو أول تعبير عالمي عن الحقوق."}, {"t": "mcq", "n": 71, "q": "............ protect a group of people.", "o": ["none", "a and b", "collective rights", "individual rights"], "c": 2, "a": "بيسأل مين اللي بيحمي مجموعة من الناس.", "w": "الحقوق الجماعية (Collective rights)."}, {"t": "mcq", "n": 72, "q": "The International Bill of Human Rights consists of:", "o": ["the International Covenant on Economic, Social and Cultural Rights.", "the Universal Declaration of Human Rights.", "the International Covenant on Civil and Political Rights and its two optional protocols.", "all of the above"], "c": 3, "a": "بيسأل الـ International Bill of Human Rights بيتكون من إيه.", "w": "من كل اللي ذُكر: العهدين الدوليين والإعلان العالمي."}, {"t": "mcq", "n": 73, "q": "The UDHR consists mainly of an introductory preamble which has paragraphs.", "o": ["50", "6", "30", "7"], "c": 3, "a": "بيسأل ديباجة الإعلان فيها كام فقرة.", "w": "7 فقرات."}, {"t": "mcq", "n": 74, "q": "The Universal Declaration of Human Rights was", "o": ["adopted to secure people’s fundamental rights.", "adopted to secure people’s political rights.", "issued directly after World War I.", "issued directly before World War II."], "c": 0, "a": "بيسأل الإعلان العالمي اتعمل ليه.", "w": "لضمان الحقوق الأساسية للناس."}, {"t": "mcq", "n": 75, "q": "Human rights are rights that are", "o": ["guaranteed to every human being by states.", "inherent to all human beings.", "acquired by human beings when they reach 18.", "acquired by human beings according to their achievements."], "c": 1, "a": "بيسأل حقوق الإنسان هي حقوق إزاي.", "w": "أصيلة وملازمة لكل البشر (inherent)."}, {"t": "mcq", "n": 76, "q": "The obligation to protect human rights means", "o": ["states must not interfere with the enjoyment of human rights.", "states must protect individuals and groups against human rights abuses.", "states must take steps to realize the right in question.", "states must take steps to secure freedom of expression."], "c": 1, "a": "بيسأل معنى الالتزام بالحماية (Protect).", "w": "الدولة لازم تحمي الأفراد والجماعات من الانتهاكات."}, {"t": "mcq", "n": 77, "q": "Which of the following is NOT true about human rights?", "o": ["They belong to all people equally.", "They are founded on respect for the dignity and worth of each person.", "They can be given or taken away.", "They are the same for all human beings."], "c": 2, "a": "بيسأل أنهي جملة غلط عن حقوق الإنسان.", "w": "الحقوق مش بتتمنح ولا بتتسحب، فجملة \"ممكن تتدّى أو تتاخد\" غلط."}, {"t": "mcq", "n": 78, "q": "What is the duty of governments towards human rights?", "o": ["They should protect and promote human rights.", "They should guarantee human rights of certain social groups.", "They should limit human rights to certain categories.", "They should protect citizens from the interference of the state in their human rights."], "c": 0, "a": "بيسأل واجب الحكومات تجاه حقوق الإنسان.", "w": "تحميها وتعززها (protect and promote)."}, {"t": "mcq", "n": 79, "q": "Which of the following is NOT among the characteristics of human rights?", "o": ["They are universal.", "They are indivisible.", "They cannot be waived or taken away.", "They do not impose obligations on states."], "c": 3, "a": "بيسأل أنهي جملة مش من خصائص حقوق الإنسان.", "w": "الحقوق بتفرض التزامات على الدول، فجملة \"مبتفرضش التزامات\" غلط."}, {"t": "mcq", "n": 80, "q": "One of the following statements is true about human rights.", "o": ["Human rights standards require a certain set of performance standards.", "Human rights are related to national laws only.", "The obligation to respect human rights requires states to take positive action to facilitate the enjoyment of basic human rights.", "The obligation to fulfill human rights requires states to protect individuals against human rights abuses."], "c": 0, "a": "بيسأل أنهي جملة صح عن حقوق الإنسان.", "w": "معايير حقوق الإنسان بتتطلب مستوى أداء معين من الجهات الملتزمة، والباقي فيه أخطاء."}, {"t": "mcq", "n": 81, "q": "The Magna Carta was issued in", "o": ["1125", "1215", "1315", "1512"], "c": 1, "a": "بيسأل الماجنا كارتا اتصدرت إمتى.", "w": "سنة 1215."}, {"t": "mcq", "n": 82, "q": "The first global expression of rights to which all human beings are entitled is", "o": ["the Magna Carta", "the Universal Declaration of Human Rights", "the UN Charter", "the UN Treaty Bodies"], "c": 1, "a": "بيسأل أول تعبير عالمي عن حقوق كل البشر.", "w": "الإعلان العالمي لحقوق الإنسان (UDHR)."}, {"t": "mcq", "n": 83, "q": "The UDHR was adopted on", "o": ["December 10, 1945", "December 10, 1946", "December 10, 1948", "December 10, 1949"], "c": 2, "a": "بيسأل الإعلان اتعتمد إمتى.", "w": "10 ديسمبر 1948."}, {"t": "mcq", "n": 84, "q": "The Declaration was translated into at least", "o": ["300 languages and dialects", "350 languages and dialects", "375 languages and dialects", "395 languages and dialects"], "c": 2, "a": "بيسأل الإعلان اتترجم لكام لغة.", "w": "375 لغة ولهجة."}, {"t": "mcq", "n": 85, "q": "Which of the following is NOT true about the UDHR?", "o": ["It is the most widely translated document in the world.", "It was adopted in Paris.", "It consists of 30 articles.", "It was the outcome of World War I."], "c": 3, "a": "بيسأل أنهي جملة غلط عن الإعلان.", "w": "هو نتيجة الحرب العالمية التانية مش الأولى."}, {"t": "mcq", "n": 86, "q": "The preamble of the UDHR consists of", "o": ["five paragraphs", "six paragraphs", "seven paragraphs", "eight paragraphs"], "c": 2, "a": "بيسأل ديباجة الإعلان فيها كام فقرة.", "w": "سبع فقرات."}, {"t": "mcq", "n": 87, "q": "In the preamble of the UDHR, the paragraph that relates human rights to the development of friendly relations between nations is", "o": ["the second", "the third", "the fourth", "the fifth"], "c": 2, "a": "بيسأل أنهي فقرة بتربط حقوق الإنسان بتنمية علاقات الصداقة بين الدول.", "w": "الفقرة الرابعة."}, {"t": "mcq", "n": 88, "q": "In the preamble of the UDHR, the paragraph that emphasizes the need to protect human rights by the rule of law is", "o": ["the first", "the second", "the third", "the fourth"], "c": 2, "a": "بيسأل أنهي فقرة بتأكد حماية الحقوق بسيادة القانون.", "w": "الفقرة التالتة."}, {"t": "mcq", "n": 89, "q": "Which of the following is NOT stated in the UDHR?", "o": ["All human beings are born free and equal in dignity and rights.", "Everyone has the right to life, liberty and security of person.", "Everyone has the right to take part in the government of his country.", "Some people might be held in slavery or servitude."], "c": 3, "a": "بيسأل أنهي جملة مش مذكورة في الإعلان.", "w": "الإعلان بيمنع العبودية، فجملة \"ممكن حد يتحط في عبودية\" غلط."}, {"t": "mcq", "n": 90, "q": "Article 18 of the UDHR states that", "o": ["everyone has the right to freedom of opinion and expression.", "everyone has the right to freedom of peaceful assembly and association.", "everyone has the right to freedom of thought, conscience and religion.", "everyone has the right to equal access to public service."], "c": 2, "a": "بيسأل المادة 18 بتقول إيه.", "w": "بتنص على حرية الفكر والضمير والدين."}, {"t": "mcq", "n": 91, "q": "According to the UDHR, everyone has the right to", "o": ["periodic holidays with pay.", "periodic holidays without pay.", "work without rest.", "work under any conditions."], "c": 0, "a": "بيسأل الإعلان بيدي كل واحد الحق في إيه.", "w": "إجازات دورية مدفوعة الأجر."}, {"t": "mcq", "n": 92, "q": "According to Article 26 of the UDHR,", "o": ["elementary education shall be compulsory.", "higher education shall be compulsory.", "technical and professional education shall be compulsory.", "education shall not be free at any stage."], "c": 0, "a": "بيسأل المادة 26 بتقول إيه.", "w": "التعليم الابتدائي إلزامي، والتعليم مجاني في المراحل الأساسية."}, {"t": "mcq", "n": 93, "q": "“Treaty bodies” are", "o": ["committees of dependent experts.", "committees of independent experts.", "governmental committees.", "non-governmental organizations."], "c": 1, "a": "بيسأل لجان Treaty bodies عبارة عن إيه.", "w": "لجان خبراء مستقلين."}, {"t": "mcq", "n": 94, "q": "“Special procedures” is the general name given to the mechanisms established by", "o": ["the Commission on Human Rights.", "the Security Council.", "the International Court of Justice.", "the World Bank."], "c": 0, "a": "بيسأل \"Special procedures\" اتعملت بمعرفة مين.", "w": "لجنة حقوق الإنسان بالأمم المتحدة."}, {"t": "mcq", "n": 95, "q": "Collective rights refer to the rights of", "o": ["individual citizens only.", "peoples and groups, such as ethnic and religious minorities and indigenous peoples.", "governments and state institutions.", "multinational corporations."], "c": 1, "a": "بيسأل الحقوق الجماعية بتخص مين.", "w": "الشعوب والجماعات زي الأقليات العرقية والدينية والشعوب الأصلية."}, {"t": "mcq", "n": 96, "q": "Which of the following is an example of a collective right?", "o": ["The right to self-determination.", "The right to a fair trial.", "The right to privacy.", "The right to own individual property."], "c": 0, "a": "بيسأل أنهي مثال لحق جماعي.", "w": "الحق في تقرير المصير بيخص شعب كامل مش فرد."}, {"t": "mcq", "n": 97, "q": "Who is the primary duty-bearer under international human rights law?", "o": ["Private individuals.", "Non-governmental organizations.", "The State.", "Multinational corporations."], "c": 2, "a": "بيسأل مين الملتزم الأساسي في القانون الدولي لحقوق الإنسان.", "w": "الدولة (The State)."}, {"t": "mcq", "n": 98, "q": "In 1941, Franklin Roosevelt highlighted four freedoms, which are", "o": ["freedom of speech, religion, from want, and from fear.", "freedom of press, assembly, movement, and trade.", "freedom from poverty, disease, ignorance, and war.", "freedom of thought, conscience, expression, and association."], "c": 0, "a": "بيسأل الحريات الأربع اللي ذكرها روزفلت سنة 1941.", "w": "حرية التعبير والدين، والتحرر من العوز والخوف."}, {"t": "mcq", "n": 99, "q": "Which legal system specifically protects labor rights?", "o": ["International Humanitarian Law.", "International Labour Organization (ILO) conventions and standards.", "The Geneva Conventions.", "The Rome Statute."], "c": 1, "a": "بيسأل أنهي نظام قانوني بيحمي حقوق العمال.", "w": "اتفاقيات ومعايير منظمة العمل الدولية ILO."}, {"t": "mcq", "n": 100, "q": "Which body of law applies specifically to armed conflicts?", "o": ["International Labour Law.", "International Humanitarian Law.", "International Trade Law.", "International Environmental Law."], "c": 1, "a": "بيسأل أنهي قانون بيطبق في النزاعات المسلحة.", "w": "القانون الدولي الإنساني (IHL) زي اتفاقيات جنيف."}, {"t": "mcq", "n": 101, "q": "The obligation to “respect” human rights means", "o": ["states must refrain from interfering with or curtailing the enjoyment of human rights.", "states must protect individuals against abuses by third parties.", "states must take positive action to facilitate the enjoyment of basic human rights.", "states must punish all criminals."], "c": 0, "a": "بيسأل معنى \"Respect\" الحقوق.", "w": "الدولة تمتنع عن التدخل أو تقييد التمتع بالحقوق."}, {"t": "mcq", "n": 102, "q": "The obligation to “fulfill” human rights means", "o": ["states must not interfere with human rights.", "states must protect individuals from third-party abuses.", "states must take positive action to facilitate the enjoyment of basic human rights.", "states must abolish all taxes."], "c": 2, "a": "بيسأل معنى \"Fulfill\" الحقوق.", "w": "الدولة تتخذ إجراءات إيجابية لتسهيل التمتع بالحقوق الأساسية."}, {"t": "mcq", "n": 103, "q": "Which of the following is an example of a state fulfilling its obligation to “protect” the right to education?", "o": ["Building new public schools.", "Not closing down existing schools arbitrarily.", "Ensuring that parents and employers do not stop girls from going to school.", "Providing free textbooks to all students."], "c": 2, "a": "بيسأل مثال على التزام الدولة بـ \"Protect\" الحق في التعليم.", "w": "التأكد إن الأهل وأصحاب العمل مايمنعوش البنات من المدرسة، ودي حماية من طرف تالت."}, {"t": "mcq", "n": 104, "q": "Which of the following is an example of a state violating its obligation to “respect” human rights?", "o": ["Carrying out forced evictions or arbitrarily restricting the right to vote.", "Failing to stop private companies from polluting a river.", "Failing to build enough hospitals in rural areas.", "Failing to provide free primary education."], "c": 0, "a": "بيسأل مثال على انتهاك الدولة لالتزام \"Respect\".", "w": "الإخلاء القسري أو تقييد التصويت تعسفًا، لأن الدولة نفسها هي اللي بتنتهك."}, {"t": "mcq", "n": 105, "q": "Under the Convention on the Rights of the Child, who has explicit obligations towards children alongside the state?", "o": ["Only international organizations.", "Parents.", "Only teachers.", "Only NGOs."], "c": 1, "a": "بيسأل مين عليه التزامات بجانب الدولة تجاه الأطفال في اتفاقية الطفل.", "w": "الوالدين."}, {"t": "mcq", "n": 106, "q": "The principle that human rights belong to every person regardless of race, color, sex, language, religion, or other status is known as", "o": ["cultural relativism.", "non-discrimination.", "derogation.", "sovereignty."], "c": 1, "a": "بيسأل المبدأ اللي بيقول الحقوق لكل شخص بغض النظر عن العرق واللون والجنس.", "w": "عدم التمييز (Non-discrimination)."}, {"t": "mcq", "n": 107, "q": "Which principle states that all human rights are equally important and cannot be positioned in a hierarchical order?", "o": ["Universality.", "Indivisibility and interdependence.", "Inalienability.", "Accountability."], "c": 1, "a": "بيسأل المبدأ اللي بيقول كل الحقوق متساوية الأهمية ومترتبش.", "w": "عدم التجزئة والترابط (Indivisibility and interdependence)."}, {"t": "mcq", "n": 108, "q": "The principle that human rights cannot be taken away or given up is called", "o": ["universality.", "inalienability.", "indivisibility.", "equality."], "c": 1, "a": "بيسأل المبدأ اللي بيقول الحقوق متتسحبش ولا يتم التنازل عنها.", "w": "عدم القابلية للتصرف (Inalienability)."}, {"t": "mcq", "n": 109, "q": "Which of the following is considered a civil and political right (first-generation right)?", "o": ["The right to work.", "The right to health care.", "The right to freedom of speech and fair trial.", "The right to social security."], "c": 2, "a": "بيسأل أنهي حق من الحقوق المدنية والسياسية (الجيل الأول).", "w": "حرية التعبير والمحاكمة العادلة."}, {"t": "mcq", "n": 110, "q": "Which of the following is considered an economic, social, and cultural right (second-generation right)?", "o": ["The right to vote.", "The right to education and adequate standard of living.", "Freedom from arbitrary arrest.", "Freedom of religion."], "c": 1, "a": "بيسأل أنهي حق من الحقوق الاقتصادية والاجتماعية والثقافية (الجيل التاني).", "w": "الحق في التعليم ومستوى معيشة لائق."}, {"t": "mcq", "n": 111, "q": "Which of the following is NOT a civil and political right?", "o": ["Right to life.", "Freedom of expression.", "Right to housing.", "Right to vote."], "c": 2, "a": "بيسأل أنهي حق مش مدني وسياسي.", "w": "الحق في السكن حق اقتصادي واجتماعي مش مدني."}, {"t": "mcq", "n": 112, "q": "The two International Covenants (ICCPR and ICESCR) were adopted by the UN General Assembly in", "o": ["1945", "1948", "1966", "1976"], "c": 2, "a": "بيسأل العهدين الدوليين اتعتمدوا في أنهي سنة.", "w": "1966."}, {"t": "mcq", "n": 113, "q": "Unlike the UDHR, which was originally a declaration, the ICCPR and ICESCR are", "o": ["non-binding recommendations.", "legally binding treaties on states that ratify them.", "regional agreements only for Europe.", "temporary emergency guidelines."], "c": 1, "a": "بيسأل الفرق بين الإعلان والعهدين.", "w": "العهدين معاهدات ملزمة قانونيًا للدول اللي بتصدّق عليها، والإعلان في الأصل غير ملزم."}, {"t": "mcq", "n": 114, "q": "Under the Convention on the Rights of the Child (CRC), a child is defined as every human being below the age of", "o": ["14 years.", "16 years.", "18 years.", "21 years."], "c": 2, "a": "بيسأل الطفل بتعريف اتفاقية حقوق الطفل أقل من كام سنة.", "w": "أقل من 18 سنة."}, {"t": "mcq", "n": 115, "q": "The primary consideration in all actions concerning children under the CRC is", "o": ["the financial cost to the state.", "the best interests of the child.", "the wishes of employers.", "the cultural traditions of the region."], "c": 1, "a": "بيسأل الاعتبار الأول في كل الإجراءات اللي تخص الأطفال.", "w": "مصلحة الطفل الفضلى."}, {"t": "mcq", "n": 116, "q": "Human rights obligations include", "o": ["Respect, protect, and fulfill", "Respect, ignore, and reform", "Protect, limit, and punish", "Fulfill, waive, and restrict"], "c": 0, "a": "بيسأل التزامات حقوق الإنسان بتشمل إيه.", "w": "الاحترام والحماية والوفاء (Respect, Protect, Fulfill)."}, {"t": "mcq", "n": 117, "q": "Who wrote extensively on people’s rights to own property and participate in public affairs?", "o": ["Aristotle, Plato, and Socrates", "Rousseau and Voltaire", "Karl Marx", "Thomas Hobbes"], "c": 0, "a": "بيسأل مين اللي كتب عن حق الناس في الملكية والمشاركة في الشأن العام.", "w": "أرسطو وأفلاطون وسقراط."}, {"t": "tf", "n": 1, "q": "The concept of human rights is purely modern with no traces in history.", "c": 1, "a": "بيسأل مفهوم حقوق الإنسان حديث بالكامل ومالوش جذور؟", "w": "غلط، لأن له جذور قديمة (اليونان، الماجنا كارتا، وغيرها)."}, {"t": "tf", "n": 2, "q": "Human rights follow a certain hierarchy of importance.", "c": 1, "a": "بيسأل حقوق الإنسان ليها ترتيب في الأهمية؟", "w": "غلط، كلها متساوية ومتكاملة."}, {"t": "tf", "n": 3, "q": "Disregard and contempt for human rights have resulted in barbarous acts which have outraged the conscience of mankind.", "c": 0, "a": "بيسأل ازدراء حقوق الإنسان أدى لأعمال همجية؟", "w": "صح، وده نص من ديباجة الإعلان."}, {"t": "tf", "n": 4, "q": "In 1941, Franklin Roosevelt highlighted four freedoms: freedom of speech and religion and freedom from want and fear.", "c": 0, "a": "بيسأل الحريات الأربع لروزفلت 1941.", "w": "صح، حرية التعبير والدين والتحرر من العوز والخوف."}, {"t": "tf", "n": 5, "q": "The Magna Carta included the human rights of serfs.", "c": 1, "a": "بيسأل الماجنا كارتا شملت حقوق الأقنان (serfs)؟", "w": "غلط، كانت للنبلاء وطبقات معينة بس."}, {"t": "tf", "n": 6, "q": "Abolishing slavery in the USA took place in the whole country at the same time.", "c": 1, "a": "بيسأل العبودية اتلغت في أمريكا كلها مرة واحدة؟", "w": "غلط، اتلغت تدريجيًا وعلى مراحل."}, {"t": "tf", "n": 7, "q": "Abolishing slavery happened in Britain before the USA.", "c": 0, "a": "بيسأل بريطانيا ألغت العبودية قبل أمريكا؟", "w": "صح، بريطانيا ألغتها الأول."}, {"t": "tf", "n": 8, "q": "Special procedures are individuals and expert bodies appointed by the United Nations Commission on Human Rights to elaborate the meaning of human rights.", "c": 0, "a": "بيسأل الإجراءات الخاصة (Special procedures) هل هي أفراد وهيئات خبراء عينتهم لجنة حقوق الإنسان؟", "w": "صح، هدفهم يوضحوا معنى حقوق الإنسان."}, {"t": "tf", "n": 9, "q": "The first calls for human rights in Egypt happened in the twentieth century.", "c": 1, "a": "بيسأل أول المطالبات بحقوق الإنسان في مصر كانت في القرن 20؟", "w": "غلط، حسب الملف حصلت قبل كده."}, {"t": "tf", "n": 10, "q": "With the victory of northern states, slavery was eventually abolished in the UK putting an end to stealing a person’s freedom on the grounds of skin colour or race.", "c": 1, "a": "بيسأل انتصار الشمال ألغى العبودية في بريطانيا؟", "w": "غلط، انتصار الشمال كان في أمريكا مش بريطانيا."}, {"t": "tf", "n": 11, "q": "Characteristics of human rights include that they cannot be waived or taken away, and they impose obligations of action and omission, particularly on States.", "c": 0, "a": "بيسأل خصائص الحقوق: متتسحبش وتفرض التزامات على الدول.", "w": "صح، دي من خصائصها."}, {"t": "tf", "n": 12, "q": "The principle that EVERYONE is entitled to certain rights by virtue of being human is a modern one.", "c": 0, "a": "بيسأل مبدأ إن كل الناس ليهم حقوق لمجرد إنهم بشر حديث؟", "w": "صح، المبدأ بالشكل الشامل ده حديث."}, {"t": "tf", "n": 13, "q": "Eighteenth century documents for human rights included women and oppressed groups.", "c": 1, "a": "بيسأل وثائق القرن 18 شملت النساء والفئات المضطهدة؟", "w": "غلط، استبعدتهم."}, {"t": "tf", "n": 14, "q": "The League of Nations was founded by the end of World War I and was successful in achieving its goals for protection of human rights.", "c": 1, "a": "بيسأل عصبة الأمم نجحت؟", "w": "غلط، فشلت (ومنها إن أمريكا مدخلتش)."}, {"t": "tf", "n": 15, "q": "Piaget viewed moral development as the result of interpersonal interactions through which individuals work out resolutions which all think are fair.", "c": 0, "a": "بيسأل Piaget شاف النمو الأخلاقي إزاي.", "w": "صح، نتيجة تفاعلات بين الأفراد بيتوصلوا فيها لحلول عادلة للكل."}, {"t": "tf", "n": 16, "q": "Protection of the environment is an ethical step that the whole world needs to take.", "c": 0, "a": "بيسأل حماية البيئة خطوة أخلاقية مطلوبة؟", "w": "صح."}, {"t": "tf", "n": 17, "q": "The UDHR was adopted by the United Nations General Assembly on December 10, 1948 in London.", "c": 1, "a": "بيسأل الإعلان اتعتمد في لندن؟", "w": "غلط، اتعتمد في باريس."}, {"t": "tf", "n": 18, "q": "It is not essential to promote the development of friendly relations between nations.", "c": 1, "a": "بيسأل مش ضروري نشجع العلاقات الودية بين الدول؟", "w": "غلط، ضروري وهو في الديباجة."}, {"t": "tf", "n": 19, "q": "Applied ethics is concerned with how moral outcomes can be achieved in specific situations.", "c": 0, "a": "بيسأل Applied ethics تهتم بتحقيق نتائج أخلاقية في مواقف محددة؟", "w": "صح."}, {"t": "tf", "n": 20, "q": "The Universal Declaration of Human Rights (UDHR) is a milestone in human history.", "c": 0, "a": "بيسأل الإعلان العالمي علامة فارقة؟", "w": "صح."}, {"t": "tf", "n": 21, "q": "The principle of indivisibility indicates that people’s rights can never be taken away.", "c": 1, "a": "بيسأل عدم التجزئة معناه الحقوق متتسحبش؟", "w": "غلط، ده معنى inalienability، أما عدم التجزئة فمعناه إن كل الحقوق مرتبطة ومتساوية."}, {"t": "tf", "n": 22, "q": "Human rights standards require a certain set of performance standards which are expected to be followed by duty-bearers at all levels of society - but especially by the Government and all its organs and institutions.", "c": 0, "a": "بيسأل معايير حقوق الإنسان بتتطلب مستوى أداء من الملتزمين؟", "w": "صح."}, {"t": "tf", "n": 23, "q": "Human rights differ according to each country, thus they are not universal.", "c": 1, "a": "بيسأل الحقوق بتختلف من دولة لدولة فمش عالمية؟", "w": "غلط، هي عالمية."}, {"t": "tf", "n": 24, "q": "No one shall be arbitrarily deprived of his nationality nor denied the right to change his nationality.", "c": 0, "a": "بيسأل لا حد يُحرم تعسفًا من جنسيته ولا من حق تغييرها؟", "w": "صح، وده نص الإعلان."}, {"t": "tf", "n": 25, "q": "Everyone has the right to rest and leisure, including reasonable limitation of working hours and periodic holidays without pay.", "c": 1, "a": "بيسأل الإجازات الدورية بدون أجر؟", "w": "غلط، الإعلان بيقول إجازات مدفوعة الأجر."}, {"t": "tf", "n": 26, "q": "Everyone has the right to work, to free choice of employment, to just and favorable conditions of work and to protection against unemployment.", "c": 0, "a": "بيسأل الحق في العمل واختيار الوظيفة وظروف عادلة والحماية من البطالة؟", "w": "صح، من مواد الإعلان."}, {"t": "tf", "n": 27, "q": "The foundation of justice, freedom, and peace in the world is the economic prosperity of all human beings.", "c": 1, "a": "بيسأل أساس العدالة والسلام هو الازدهار الاقتصادي؟", "w": "غلط، الأساس هو الاعتراف بالكرامة والحقوق المتساوية."}, {"t": "tf", "n": 28, "q": "Aristotle, Plato and Socrates wrote extensively on people’s rights to own property, participate in public affair, and have their say in political life.", "c": 0, "a": "بيسأل أرسطو وأفلاطون وسقراط كتبوا عن الملكية والمشاركة السياسية؟", "w": "صح."}, {"t": "tf", "n": 29, "q": "Abolishing slavery in the USA did not take place in the whole country at the same time.", "c": 0, "a": "بيسأل العبودية مش اتلغت في أمريكا كلها في نفس الوقت؟", "w": "صح."}, {"t": "tf", "n": 30, "q": "Obligations of human rights are to respect, protect and reform all rights regardless of race, gender or age.", "c": 1, "a": "بيسأل الالتزامات هي الاحترام والحماية والإصلاح (reform)؟", "w": "غلط، الصح الاحترام والحماية والوفاء (fulfill)."}, {"t": "tf", "n": 31, "q": "The nineteenth century witnessed the abolishment of slavery in Britain.", "c": 0, "a": "بيسأل القرن 19 شهد إلغاء العبودية في بريطانيا؟", "w": "صح."}, {"t": "tf", "n": 32, "q": "With the victory of northern states, slavery was eventually abolished in the USA, putting an end to stealing a person’s freedom on the grounds of skin color or race.", "c": 0, "a": "بيسأل انتصار الشمال ألغى العبودية في أمريكا؟", "w": "صح."}, {"t": "tf", "n": 33, "q": "It was the horrors of WWI that gave birth to the United Nations in 1945.", "c": 1, "a": "بيسأل أهوال الحرب العالمية الأولى هي اللي ولّدت الأمم المتحدة 1945؟", "w": "غلط، الحرب العالمية التانية هي السبب."}, {"t": "tf", "n": 34, "q": "The UDHR consists of 50 articles.", "c": 1, "a": "بيسأل الإعلان فيه 50 مادة؟", "w": "غلط، فيه 30 مادة."}, {"t": "tf", "n": 35, "q": "The Declaration was the outcome of the experience of the World War I and it represents the first global expression of rights to which all human beings are entitled.", "c": 1, "a": "بيسأل الإعلان نتيجة الحرب العالمية الأولى؟", "w": "غلط، نتيجة الحرب العالمية التانية."}, {"t": "tf", "n": 36, "q": "It consists of 30 articles which have been elaborated in later international treaties, regional human rights instruments, national constitutions and laws.", "c": 0, "a": "بيسأل الإعلان فيه 30 مادة اتفصّلت بعد كده في معاهدات ودساتير؟", "w": "صح."}, {"t": "tf", "n": 37, "q": "The preamble is the introductory statement that appears before the UDHR to specify certain points in it.", "c": 0, "a": "بيسأل الديباجة مقدمة قبل الإعلان؟", "w": "صح."}, {"t": "tf", "n": 38, "q": "The sixth highlights that disrespect of human rights resulted in brutal acts which offended the conscience of mankind and stressed the main four freedoms (of speech and belief and from want and fear) for all people.", "c": 1, "a": "بيسأل الفقرة السادسة بتتكلم عن الحريات الأربع؟", "w": "غلط، الحريات الأربع في الفقرة الثانية."}, {"t": "tf", "n": 39, "q": "The fifth relates human rights to the development of friendly relations between nations.", "c": 1, "a": "بيسأل الفقرة الخامسة بتربط الحقوق بالعلاقات الودية؟", "w": "غلط، دي الرابعة."}, {"t": "tf", "n": 40, "q": "The seventh links the Declaration back to the United Nations Charter which reaffirms faith in basic human rights and dignity of all human beings.", "c": 1, "a": "بيسأل الفقرة السابعة بتربط الإعلان بميثاق الأمم المتحدة؟", "w": "غلط، حسب الملف دي الخامسة."}, {"t": "tf", "n": 41, "q": "It is essential, if man is not to be compelled to have recourse, as a last resort, to rebellion against tyranny and oppression, that human rights should be protected by the rule of law.", "c": 0, "a": "بيسأل الحقوق لازم تتحمى بسيادة القانون عشان مايضطرش الناس للتمرد؟", "w": "صح، وده نص الديباجة."}, {"t": "tf", "n": 42, "q": "Peoples of the United Nations have in the Charter reaffirmed their faith in fundamental human rights, in the dignity and worth of the human person and in the equal rights of men and women.", "c": 0, "a": "بيسأل شعوب الأمم المتحدة أكدت إيمانها بالحقوق الأساسية والمساواة بين الرجل والمرأة؟", "w": "صح، من الميثاق والديباجة."}, {"t": "tf", "n": 43, "q": "No one shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms.", "c": 0, "a": "بيسأل العبودية ممنوعة بكل أشكالها؟", "w": "صح، المادة 4."}, {"t": "tf", "n": 44, "q": "Some people might be subjected to torture or to cruel, inhuman or degrading treatment or punishment.", "c": 1, "a": "بيسأل بعض الناس ممكن يتعرضوا للتعذيب؟", "w": "غلط، التعذيب ممنوع على الجميع."}, {"t": "tf", "n": 45, "q": "Everyone charged with a penal offence has the right to be presumed innocent until proved guilty according to law in a public trial at which he has no guarantees necessary for his defense.", "c": 1, "a": "بيسأل المتهم بريء لحد ما يثبت إدانته في محاكمة علنية مفيهاش ضمانات دفاع؟", "w": "غلط، لازم في محاكمة علنية فيها كل ضمانات الدفاع."}, {"t": "tf", "n": 46, "q": "Everyone, with some discrimination, has the right to equal pay for equal work.", "c": 1, "a": "بيسأل أجر متساوي للعمل المتساوي مع بعض التمييز؟", "w": "غلط، من غير أي تمييز."}, {"t": "tf", "n": 47, "q": "Everyone has the right to education but education shall not be free.", "c": 1, "a": "بيسأل التعليم مش مجاني؟", "w": "غلط، التعليم الأساسي مجاني وإلزامي."}, {"t": "tf", "n": 48, "q": "Education shall be directed to the full development of the human personality and to the strengthening of respect for human rights and fundamental freedoms.", "c": 0, "a": "بيسأل التعليم يهدف لتنمية الشخصية واحترام حقوق الإنسان؟", "w": "صح."}, {"t": "tf", "n": 49, "q": "The Universal Declaration of Human Rights (UDHR), which was adopted on December 10, 1948 in Paris.", "c": 0, "a": "بيسأل الإعلان اتعتمد 10 ديسمبر 1948 في باريس؟", "w": "صح."}, {"t": "tf", "n": 50, "q": "Human Dignity should be emphasized as the basis for justices and peace in the world.", "c": 0, "a": "بيسأل كرامة الإنسان أساس العدالة والسلام؟", "w": "صح."}, {"t": "tf", "n": 51, "q": "The term individual rights or group rights refers to the rights of such people and groups, including ethnic and religious minorities and indigenous people.", "c": 1, "a": "بيسأل \"individual or group rights\" هو مصطلح حقوق الأقليات؟", "w": "غلط، المصطلح الصح collective rights."}, {"t": "tf", "n": 52, "q": "The Principle of Universality means that human rights belong to and are to be enjoyed by all human beings apart from their race, color, gender, languages, religion, political views, social origin, or other status.", "c": 0, "a": "بيسأل مبدأ العالمية بتاع الحقوق.", "w": "صح، بتخص كل البشر بغض النظر عن العرق والجنس والدين وخلافه."}, {"t": "tf", "n": 53, "q": "Respect is one of obligations to human rights.", "c": 0, "a": "بيسأل الاحترام من التزامات حقوق الإنسان؟", "w": "صح."}, {"t": "tf", "n": 54, "q": "The UDHR begins with an introductory preamble consisting of six paragraphs followed by a statement ’Proclaiming’ the Declaration.", "c": 1, "a": "بيسأل الديباجة ست فقرات؟", "w": "غلط، سبع فقرات."}, {"t": "tf", "n": 55, "q": "The human rights treaty bodies are committees of dependent experts that monitor implementation of international human rights treaties.", "c": 1, "a": "بيسأل لجان الـ Treaty bodies خبراء تابعين للحكومات؟", "w": "غلط، هم خبراء مستقلين."}, {"t": "tf", "n": 56, "q": "The human rights treaty bodies are committees of independent experts that monitor implementation of international human rights treaties.", "c": 0, "a": "بيسأل لجان الـ Treaty bodies خبراء مستقلين؟", "w": "صح."}, {"t": "tf", "n": 57, "q": "Human Rights Watch is considered independent non-governmental organizations.", "c": 0, "a": "بيسأل Human Rights Watch منظمة غير حكومية مستقلة؟", "w": "صح."}, {"t": "tf", "n": 58, "q": "The term collective rights means the rights of such peoples and groups, including ethnic and religious minorities and indigenous peoples, where the individual is defined by his or her ethnic, cultural or religious community.", "c": 0, "a": "بيسأل تعريف الحقوق الجماعية.", "w": "صح، هي حقوق شعوب وجماعات بتعرّف الفرد بانتمائه العرقي أو الثقافي أو الديني."}, {"t": "tf", "n": 59, "q": "Everyone has the right to form and to join trade unions for the protection of his interests but only under the consent of the government.", "c": 1, "a": "بيسأل الحق في تكوين النقابات بموافقة الحكومة بس؟", "w": "غلط، الحق مش مشروط بموافقة الحكومة."}, {"t": "tf", "n": 60, "q": "The concept of human rights appears to be a modern one, but it has its deep roots in history.", "c": 0, "a": "بيسأل حقوق الإنسان تبدو حديثة لكن ليها جذور عميقة؟", "w": "صح."}, {"t": "tf", "n": 61, "q": "The first documented calls for human rights started in the 18th century with the Magna Carta.", "c": 1, "a": "بيسأل أول مطالبات حقوق الإنسان بدأت في القرن 18 مع الماجنا كارتا؟", "w": "غلط، الماجنا كارتا سنة 1215 (القرن 13)."}, {"t": "tf", "n": 62, "q": "The Universal Declaration of Human Rights is legally binding in itself.", "c": 1, "a": "بيسأل الإعلان العالمي ملزم قانونيًا في حد ذاته؟", "w": "غلط، ملزم أدبيًا وسياسيًا؛ الإلزام القانوني جاي من العهود والمعاهدات."}, {"t": "tf", "n": 63, "q": "Human rights are interdependent and indivisible.", "c": 0, "a": "بيسأل الحقوق مترابطة وغير قابلة للتجزئة؟", "w": "صح."}, {"t": "tf", "n": 64, "q": "True or False: The League of Nations succeeded in preventing World War II.", "c": 1, "a": "بيسأل عصبة الأمم نجحت في منع الحرب العالمية التانية؟", "w": "غلط، فشلت."}];
+    var state = {}; // n key -> {pick: idx|-1}
+    var filter = 'all';
+    var TABS = [['all', 'الكل'], ['mcq', 'اختيار من متعدد'], ['tf', 'صح وخطأ']];
+    var LET = ['A', 'B', 'C', 'D'];
+    function key(d) {return d.t + d.n}
+    function el(tag, cls, txt) {var e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e}
+    function optsOf(d) {return d.t === 'mcq' ? d.o : ['True', 'False']}
+    function renderTabs() {
+      var box = document.getElementById('tabs'); box.innerHTML = '';
+      TABS.forEach(function (t) {
+        var b = el('button', 'tab' + (filter === t[0] ? ' on' : ''), t[1]);
+        b.onclick = function () {filter = t[0]; renderTabs(); renderList(); stats()};
+        box.appendChild(b);
+      });
+    }
+    function renderCard(d) {
+      var k = key(d), st = state[k], done = !!st;
+      var card = el('div', 'card' + (done ? ' done' : ''));
+      var meta = el('div', 'meta');
+      meta.appendChild(el('span', 'badge' + (d.t === 'tf' ? ' tf' : ''), (d.t === 'mcq' ? 'MCQ' : 'صح / خطأ') + ' · ' + d.n));
+      card.appendChild(meta);
+      var q = el('p', 'q', d.q); card.appendChild(q);
+      var box = el('div', 'opts' + (d.t === 'tf' ? ' tfrow' : ''));
+      optsOf(d).forEach(function (txt, i) {
+        var b = el('button', 'opt');
+        if (d.t === 'mcq') b.appendChild(el('span', 'l', LET[i]));
+        b.appendChild(el('span', '', txt));
+        if (done) {
+          b.disabled = true;
+          if (i === d.c) b.classList.add('ok');
+          else if (st.pick === i) b.classList.add('bad');
+        } else b.onclick = function () {state[k] = {pick: i}; refresh(d, card)};
+        box.appendChild(b);
+      });
+      card.appendChild(box);
+      if (!done) {
+        var ac = el('div', 'actions'); var s = el('button', 'btn sm', 'اعرض الإجابة');
+        s.onclick = function () {state[k] = {pick: -1}; refresh(d, card)};
+        ac.appendChild(s); card.appendChild(ac);
+      } else {
+        var ex = el('div', 'exp');
+        var v = st.pick === -1 ? ['skip', 'الإجابة'] : (st.pick === d.c ? ['ok', '✓ إجابتك صح'] : ['bad', '✗ إجابتك غلط']);
+        ex.appendChild(el('div', 'verdict ' + v[0], v[1]));
+        var r1 = el('div', 'row r1'); r1.appendChild(el('strong', '', '🎯 السؤال عاوز إيه؟')); r1.appendChild(document.createTextNode(d.a)); ex.appendChild(r1);
+        var r2 = el('div', 'row r2'); r2.appendChild(el('strong', '', '✅ الإجابة الصح'));
+        r2.appendChild(el('span', 'en', d.t === 'mcq' ? LET[d.c] + '. ' + d.o[d.c] : (d.c === 0 ? 'True (صح)' : 'False (غلط)'))); ex.appendChild(r2);
+        var r3 = el('div', 'row r3'); r3.appendChild(el('strong', '', '💡 الشرح')); r3.appendChild(document.createTextNode(d.w)); ex.appendChild(r3);
+        card.appendChild(ex);
+      }
+      return card;
+    }
+    function refresh(d, card) {var n = renderCard(d); card.replaceWith(n); stats()}
+    function visible() {return DATA.filter(function (d) {return filter === 'all' || d.t === filter})}
+    function renderList() {
+      var box = document.getElementById('list'); box.innerHTML = '';
+      var v = visible();
+      if (!v.length) {box.appendChild(el('div', 'empty', 'مفيش أسئلة')); return }
+      v.forEach(function (d) {box.appendChild(renderCard(d))});
+    }
+    function stats() {
+      var v = visible(), done = 0, ok = 0;
+      v.forEach(function (d) {var s = state[key(d)]; if (s) {done++; if (s.pick === d.c) ok++} });
+      document.getElementById('sDone').textContent = done;
+      document.getElementById('sTot').textContent = v.length;
+      document.getElementById('sOk').textContent = ok;
+      document.getElementById('pBar').style.width = (v.length ? done / v.length * 100 : 0) + '%';
+    }
+    document.getElementById('reset').onclick = function () {state = {}; renderList(); stats(); window.scrollTo(0, 0)};
+    renderTabs(); renderList(); stats();
+  </script>
+</body>
+
+</html>
